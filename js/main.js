@@ -1,4 +1,5 @@
 import { buildWatch } from './logic.js'
+import * as data from '../data.js'
 
 buildWatch().then(() => {
   setTimeout(() => {
@@ -14,34 +15,41 @@ if ('serviceWorker' in navigator) {
   });
 }
 
-// fetch('https://www.amdoren.com/api/timezone.php?api_key=5s7hVwd4xv2wVjKrEWQjcC79BM2nH2&loc=New+York')
-// .then(res => {
-//   debugger
-//   console.log(res)
-// })
-// .catch(err => {
-//   debugger
-//   console.log(err)
-// })
+const input = document.querySelector('input')
+input.addEventListener('change', (e) => {
+  let offset
+  data.data.forEach(el => {
+    if (el.country.toLowerCase().includes(e.target.value.toLowerCase())) {
+      offset = el.UTCoffset
+      calcTime(el.country, offset)
+      return
+    }
+  })
+  console.log('offset:'+ offset)
+})
 
-// function calcTime(city, offset) {
-//   // create Date object for current location
-//   var d = new Date();
+function calcTime(city, offset) {
+  // create Date object for current location
+  var d = new Date()
 
-//   // convert to msec
-//   // subtract local time zone offset
-//   // get UTC time in msec
-//   var utc = d.getTime() + (d.getTimezoneOffset() * 60000);
+  // convert to msec
+  // subtract local time zone offset
+  // get UTC time in msec
+  var utc = d.getTime() + (d.getTimezoneOffset() * 60000)
 
-//   // create new Date object for different city
-//   // using supplied offset
-//   var nd = new Date(utc + (3600000*offset));
+  // create new Date object for different city
+  // using supplied offset
 
-//   // return time as a string
-//   return "The local time for city"+ city +" is "+ nd.toLocaleString();
-// }
+  const formatted = offset.includes(':30') ? offset.replace(':30', '.5') : offset.replace(':', '.')
+  
+  var nd = new Date(utc + (3600000*formatted))
 
-// alert(calcTime('Bombay', '+5.5'));
+  // return time as a string
+  console.log("The local time for city "+ city +" is "+ nd.toLocaleString())
+  return "The local time for city "+ city +" is "+ nd.toLocaleString()
+}
+
+// alert();
 
 // const dataDiv = document.querySelector('.data')
 // debugger

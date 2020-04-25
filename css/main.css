@@ -6,6 +6,37 @@ body {
     justify-content: center;
     align-items: center;
     height: 100vh;
+    background-color: #000000;
+}
+
+.header {
+    height: 60px;
+    color: white;
+    display: flex;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background-color: #04427c;
+    padding: 6px 20px;
+    font-size: larger;
+}
+
+input {
+    position: fixed;
+    bottom: 12%;
+    width: 300px;
+    border-radius: 6px;
+    background-color: #000000;
+    color: #f0f0f0;
+    padding: 10px;
+    font-size: 1.3rem;
+}
+
+input:focus {
+    outline: none;
+    border-color: #399dfa;
 }
 
 .watch {
@@ -14,7 +45,7 @@ body {
     background-image: url('../icon/unnamed.png');
     background-size: 100%;
     position: relative;
-    background-color: #09ff17;
+    background-color: #f0f0f0;
     border-radius: 50%;
 }
 
