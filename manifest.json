@@ -1,0 +1,13 @@
+{
+    "name": "Time zone",
+    "short_name": "time zone",
+    "start_url": ".",
+    "display": "standalone",
+    "background_color": "#fff",
+    "description": "A simply time zone app",
+    "icons": [{
+      "src": "icon/icon.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }]
+  }
