@@ -24,14 +24,13 @@ body {
 }
 
 input {
-    position: fixed;
-    bottom: 12%;
-    width: 300px;
+    flex: 1;
+    margin-left: 10px;
     border-radius: 6px;
     background-color: #000000;
     color: #f0f0f0;
     padding: 10px;
-    font-size: 1.3rem;
+    font-size: 1rem;
 }
 
 input:focus {
