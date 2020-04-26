@@ -15,9 +15,16 @@ if ('serviceWorker' in navigator) {
   });
 }
 
-const input = document.querySelector('input')
+const input = document.querySelector('input[name="country"]')
 input.addEventListener('change', (e) => {
-  let offset
+  const dayLightSaving = document.querySelector('#day-saving-checkbox')
+
+  dayLightSaving.addEventListener('change', (e) => {
+    const currentZone = document.querySelector('.current-zone').textContent.split('zone: ')[1]
+    const findZone = data.data.filter(z => z.country === currentZone)[0]
+    e.target.checked ? calcTime(findZone.DST) : calcTime(findZone.UTCoffset)
+  })
+
   let filtered = []
   data.data.forEach(el => {
     if (el.country.toLowerCase().includes(e.target.value.toLowerCase())) {
@@ -32,44 +39,59 @@ input.addEventListener('change', (e) => {
       filterDiv.innerHTML += `<span class="filtered"><a>${f.country}</a></span>`
     })
     filterDiv.querySelectorAll('a').forEach((a, index) => {
-      let formattedCountry
-      formattedCountry = filtered[index].country.replace('(', '-')
-      formattedCountry = formattedCountry.replace(')', '')
       a.addEventListener('click', () => {
-        calcTime(formattedCountry, filtered[index].UTCoffset)
-        // filterDiv.innerHTML = ''
-        emptyParent(filterDiv)
-        input.value = ''
+        const offsetSelection = dayLightSaving.checked ? filtered[index].DST : filtered[index].UTCoffset
+        calcTime(offsetSelection)
+        afterTimeZoneSelection(filtered[index])
       })
     })
   } else {
-    emptyParent(filterDiv)
-    input.value = ''
-    calcTime(filtered[0].country, filtered[0].UTCoffset)
+    const offsetSelection = dayLightSaving.checked ? filtered[0].DST : filtered[0].UTCoffset
+    calcTime(offsetSelection)
+    afterTimeZoneSelection(filtered[0])
   }
 
 })
 
-function calcTime (city, offset) {
-  const formatted = offset.includes(':30') ? offset.replace(':30', '.5') : offset.replace(':', '.')
+function calcTime (offset) {
+  let formatted
+  if (offset.includes(':30')) {
+    formatted = offset.replace(':30', '.5')
+  } else if (offset.includes(':45')) {
+    formatted = offset.replace(':45', '.75')
+  } else formatted = offset.replace(':', '.')
   buildWatch(true, formatted)
 }
 
+function afterTimeZoneSelection (data) {
+  const filterDiv = document.querySelector('.filter-div')
+  const currentZone = document.querySelector('.current-zone')
+  const dstInfo = document.querySelector('.dst-info')
+  const input = document.querySelector('input[name="country"]')
+  emptyParent(filterDiv)
+  input.value = ''
+  currentZone.textContent = `Current zone: ${data.country}`
+  dstInfo.innerHTML = formatDSTinfo(data)
+}
 
-
-{/* <script> 
-    var g1 = new Date(); 
-    // (YYYY-MM-DD) 
-    var g2 = new Date(2019 - 08 - 03); 
-    if (g1.getTime() < g2.getTime()) 
-        document.write("g1 is lesser than g2"); 
-    else if (g1.getTime() > g2.getTime()) 
-        document.write("g1 is greater than g2"); 
-    else
-        document.write("both are equal"); 
+function formatDSTinfo (info) {
+if (info.DST !== '-') {
+  let startDate
+  let endDate
+  if (info.country !== 'Chatham Islands (New Zealand)' && info.country !== 'Iran') {
+    startDate = info.DSTperiodStartEnd.split(':00 ')[0] + ':00'
+    endDate = info.DSTperiodStartEnd.split(':00 ')[1]
+  } else if (info.country === 'Chatham Islands (New Zealand)') {
+    startDate = info.DSTperiodStartEnd.split(':45 ')[0] + ':45'
+    endDate = info.DSTperiodStartEnd.split(':45 ')[1]
+  } else if (info.country === 'Iran') {
   
-javascript: ;  
-</script>  */}
+  }
+  return `<div class="start"><span>Starts on:</span><span>${startDate}</span></div>
+          <div class="end"><span>Ends on:</span><span>${endDate}</span></div>`
+} else { return '' }
+
+}
 
 function emptyParent (parent) {
 while (parent.children.length !== 0) {
