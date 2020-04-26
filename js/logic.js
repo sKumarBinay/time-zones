@@ -6,14 +6,17 @@ export function buildWatch (notLocal, offset) {
         window.notLocal = notLocal
         window.offset = offset
         let date
+        let dateFormat
         setInterval(() => {
             if (window.notLocal) {
                 const d = new Date()
                 // convert to msec, subtract local time zone offset, get UTC time in msec
                 const utc = d.getTime() + (d.getTimezoneOffset() * 60000)
                 date = new Date(utc + (3600000*window.offset)).toTimeString()
+                dateFormat = new Date(utc + (3600000*window.offset)).toDateString()
             } else {
                 date = new Date().toTimeString()
+                dateFormat = new Date().toDateString()
             }
             const time = date.split(/ /g)[0]
             const sec = time.split(/:/g)[2]
@@ -22,7 +25,7 @@ export function buildWatch (notLocal, offset) {
         secHand.style.transform = `rotate(${sec * 6}deg) translate(-50%, -50%)`
         minHand.style.transform = `rotate(${min * 6}deg) translate(-50%, -50%)`
         hrHand.style.transform = `rotate(${(hr * 30) + (min / 2)}deg) translate(-50%, -50%)`
-        if (date !== undefined) resolve(date)
+        if (date !== undefined) resolve([date, dateFormat])
         }, 1000)
     })
 }

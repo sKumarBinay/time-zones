@@ -1,18 +1,20 @@
 'use strict';
 
-var _logic = require('./logic.js');
+var _logicMin = require('./logic.min.js');
 
-var _data = require('../data.js');
+var _dataMin = require('../data.min.js');
 
-var data = _interopRequireWildcard(_data);
+var data = _interopRequireWildcard(_dataMin);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
-(0, _logic.buildWatch)().then(function (date) {
+(0, _logicMin.buildWatch)().then(function (date) {
   var amPmDiv = document.querySelector('.am-pm');
+  var dateDiv = document.querySelector('.am-pm .date');
   document.querySelector('.watch').classList.remove('d-none');
   amPmDiv.classList.remove('d-none');
-  amPmDiv.textContent = date.split(':')[0] > 12 ? 'PM' : 'AM';
+  amPmDiv.textContent = date[0].split(':')[0] > 12 ? 'PM' : 'AM';
+  dateDiv.textContent = date[1];
 });
 
 // Make sure sw are supported
@@ -65,14 +67,16 @@ input.addEventListener('change', function (e) {
 
 function calcTime(offset) {
   var amPmDiv = document.querySelector('.am-pm');
+  var dateDiv = document.querySelector('.am-pm .date');
   var formatted = void 0;
   if (offset.includes(':30')) {
     formatted = offset.replace(':30', '.5');
   } else if (offset.includes(':45')) {
     formatted = offset.replace(':45', '.75');
   } else formatted = offset.replace(':', '.');
-  (0, _logic.buildWatch)(true, formatted).then(function (date) {
-    amPmDiv.textContent = date.split(':')[0] > 12 ? 'PM' : 'AM';
+  (0, _logicMin.buildWatch)(true, formatted).then(function (date) {
+    amPmDiv.textContent = date[0].split(':')[0] > 12 ? 'PM' : 'AM';
+    dateDiv.textContent = date[1];
   });
 }
 

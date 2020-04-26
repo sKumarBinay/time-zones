@@ -4,9 +4,12 @@ import * as data from '../data.min.js'
 buildWatch()
   .then(date => {
     const amPmDiv = document.querySelector('.am-pm')
+    const dateDiv = document.querySelector('.date')
     document.querySelector('.watch').classList.remove('d-none')
     amPmDiv.classList.remove('d-none')
-    amPmDiv.textContent = date.split(':')[0] > 12 ? 'PM' : 'AM'
+    dateDiv.classList.remove('d-none')
+    amPmDiv.textContent = date[0].split(':')[0] > 12 ? 'PM' : 'AM'
+    dateDiv.textContent = date[1]
   })
 
 // Make sure sw are supported
@@ -58,6 +61,7 @@ input.addEventListener('change', (e) => {
 
 function calcTime(offset) {
   const amPmDiv = document.querySelector('.am-pm')
+  const dateDiv = document.querySelector('.date')
   let formatted
   if (offset.includes(':30')) {
     formatted = offset.replace(':30', '.5')
@@ -65,7 +69,8 @@ function calcTime(offset) {
     formatted = offset.replace(':45', '.75')
   } else formatted = offset.replace(':', '.')
   buildWatch(true, formatted).then(date => {
-    amPmDiv.textContent = date.split(':')[0] > 12 ? 'PM' : 'AM'
+    amPmDiv.textContent = date[0].split(':')[0] > 12 ? 'PM' : 'AM'
+    dateDiv.textContent = date[1]
   })
 }
 

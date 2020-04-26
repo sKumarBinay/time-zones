@@ -95,6 +95,13 @@ img {
     color: #c5c0c0;
 }
 
+.date {
+    color: #c5c0c0;
+    position: fixed;
+    right: 12%;
+    bottom: 27%;
+}
+
 .day-time-saving label {
     margin-left: 10px;
 }
