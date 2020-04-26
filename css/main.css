@@ -33,6 +33,7 @@ body {
     padding: 6px;
     flex-wrap: wrap;
     z-index: 2;
+    color: #c5c0c0;
 }
 
 input[type="checkbox"][name="checkLike"] {
@@ -104,6 +105,14 @@ img {
     bottom: 70px;
     color: #c5c0c0;
     left: 10px;
+}
+
+.am-pm {
+    right: 12%;
+    color: #84b720;
+    font-size: 2rem;
+    position: fixed;
+    bottom: 30%;
 }
 
 .start {

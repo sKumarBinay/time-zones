@@ -1,11 +1,14 @@
 import { buildWatch } from './logic.js'
 import * as data from '../data.js'
 
-buildWatch().then(() => {
-  setTimeout(() => {
-    document.querySelector('.watch').classList.remove('d-none')
-  }, 1000)
-})
+buildWatch()
+.then(date => {
+  const amPmDiv = document.querySelector('.am-pm')
+  document.querySelector('.watch').classList.remove('d-none')
+  amPmDiv.classList.remove('d-none')
+  amPmDiv.textContent = date.split(':')[0] > 12 ? 'PM' : 'AM'
+  })
+
 // Make sure sw are supported
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
@@ -44,21 +47,26 @@ input.addEventListener('change', (e) => {
         afterTimeZoneSelection(filtered[index])
       })
     })
-  } else {
+  } else if (filtered.length === 1) {
     calcTime(filtered[0].UTCoffset)
     afterTimeZoneSelection(filtered[0])
+  } else {
+    filterDiv.textContent = 'Sorry, No match found.'
   }
 
 })
 
 function calcTime (offset) {
+  const amPmDiv = document.querySelector('.am-pm')
   let formatted
   if (offset.includes(':30')) {
     formatted = offset.replace(':30', '.5')
   } else if (offset.includes(':45')) {
     formatted = offset.replace(':45', '.75')
   } else formatted = offset.replace(':', '.')
-  buildWatch(true, formatted)
+  buildWatch(true, formatted).then(date => {
+    amPmDiv.textContent = date.split(':')[0] > 12 ? 'PM' : 'AM'
+  })
 }
 
 function afterTimeZoneSelection (data) {
