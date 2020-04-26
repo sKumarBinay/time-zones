@@ -72,6 +72,9 @@ function afterTimeZoneSelection (data) {
   input.value = ''
   currentZone.textContent = `Current zone: ${data.country}`
   dstInfo.innerHTML = formatDSTinfo(data)
+  if (data.DST === '-') {
+    document.querySelector('#day-saving-checkbox').disabled = true
+  }
 }
 
 function formatDSTinfo (info) {
