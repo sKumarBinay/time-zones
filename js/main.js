@@ -71,12 +71,11 @@ function afterTimeZoneSelection (data) {
   emptyParent(filterDiv)
   input.value = ''
   currentZone.textContent = `Current zone: ${data.country}`
+  const dstToggle = document.querySelector('#day-saving-checkbox')
   dstInfo.innerHTML = formatDSTinfo(data)
-  if (data.DST === '-') {
-    document.querySelector('#day-saving-checkbox').disabled = true
-  } else {
-    document.querySelector('#day-saving-checkbox').disabled = false
-  }
+  dstToggle.checked = false
+  dstToggle.disabled = (data.DST === '-') ? true : false
+
 }
 
 function formatDSTinfo (info) {
