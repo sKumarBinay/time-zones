@@ -37,11 +37,14 @@ input.addEventListener('change', (e) => {
       formattedCountry = formattedCountry.replace(')', '')
       a.addEventListener('click', () => {
         calcTime(formattedCountry, filtered[index].UTCoffset)
-        filterDiv.innerHTML = ''
+        // filterDiv.innerHTML = ''
+        emptyParent(filterDiv)
+        input.value = ''
       })
     })
   } else {
-    filterDiv.innerHTML = ''
+    emptyParent(filterDiv)
+    input.value = ''
     calcTime(filtered[0].country, filtered[0].UTCoffset)
   }
 
@@ -67,3 +70,9 @@ function calcTime (city, offset) {
   
 javascript: ;  
 </script>  */}
+
+function emptyParent (parent) {
+while (parent.children.length !== 0) {
+  parent.childNodes[0].remove()
+}
+}
