@@ -40,14 +40,12 @@ input.addEventListener('change', (e) => {
     })
     filterDiv.querySelectorAll('a').forEach((a, index) => {
       a.addEventListener('click', () => {
-        const offsetSelection = dayLightSaving.checked ? filtered[index].DST : filtered[index].UTCoffset
-        calcTime(offsetSelection)
+        calcTime(filtered[index].UTCoffset)
         afterTimeZoneSelection(filtered[index])
       })
     })
   } else {
-    const offsetSelection = dayLightSaving.checked ? filtered[0].DST : filtered[0].UTCoffset
-    calcTime(offsetSelection)
+    calcTime(filtered[0].UTCoffset)
     afterTimeZoneSelection(filtered[0])
   }
 
