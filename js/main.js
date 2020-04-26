@@ -74,6 +74,8 @@ function afterTimeZoneSelection (data) {
   dstInfo.innerHTML = formatDSTinfo(data)
   if (data.DST === '-') {
     document.querySelector('#day-saving-checkbox').disabled = true
+  } else {
+    document.querySelector('#day-saving-checkbox').disabled = false
   }
 }
 
