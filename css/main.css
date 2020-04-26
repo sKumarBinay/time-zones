@@ -23,6 +23,37 @@ body {
     font-size: larger;
 }
 
+.filter-div {
+    display: flex;
+    position: fixed;
+    top: 72px;
+    left: 0;
+    right: 0;
+    padding: 6px;
+    flex-wrap: wrap;
+    z-index: 2;
+}
+
+/* .filter-div::after {
+    content: '';
+    background-color: cadetblue;
+    opacity: 0.3;
+} */
+
+.filtered {
+    padding: 6px;
+    background-color: #ff1414d6;
+    color: white;
+    font-size: 0.8rem;
+    border-radius: 12px;
+    margin-right: 6px;
+    margin-bottom: 6px;
+}
+
+.filtered a {
+    
+}
+
 input {
     flex: 1;
     margin-left: 10px;
@@ -40,8 +71,8 @@ input:focus {
 }
 
 .watch {
-    height: 300px;
-    width: 300px;
+    height: 200px;
+    width: 200px;
     background-image: url('../icon/unnamed.png');
     background-size: 100%;
     position: relative;
@@ -53,7 +84,7 @@ input:focus {
     content: '';
     width: 9px;
     height: 9px;
-    z-index: 999;
+    z-index: 1;
     border-radius: 50%;
     position: absolute;
     background-color: rgb(15, 15, 15) !important;
@@ -65,9 +96,9 @@ input:focus {
 .watch .sec {
     position: absolute;
     width: 2px;
-    height: 130px;
+    height: 95px;
     background-color:  #f9052c;
-    bottom: 28%;
+    bottom: 26%;
     left: 50%;
     transform-origin: left;
 }
@@ -75,9 +106,9 @@ input:focus {
 .watch .min {
     position: absolute;
     width: 3px;
-    height: 90px;
+    height: 75px;
     background-color: #6b1ddc;
-    bottom: 35%;
+    bottom: 32%;
     left: 50%;
     transform-origin: left;
 }
@@ -87,7 +118,7 @@ input:focus {
     width: 5px;
     height: 60px;
     background-color: #0d0d0e;
-    bottom: 40%;
+    bottom: 35%;
     left: 50%;
     transform-origin: left;
 }

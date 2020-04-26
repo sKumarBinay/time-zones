@@ -1,10 +1,20 @@
-export function buildWatch () {
+export function buildWatch (notLocal, offset) {
     return new Promise((resolve, rej) => {
         const secHand = document.querySelector('.sec')
         const minHand = document.querySelector('.min')
         const hrHand = document.querySelector('.hr')
+        window.notLocal = notLocal
+        window.offset = offset
         setInterval(() => {
-            const date = new Date().toTimeString()
+            let date
+            if (window.notLocal) {
+                const d = new Date()
+                // convert to msec, subtract local time zone offset, get UTC time in msec
+                const utc = d.getTime() + (d.getTimezoneOffset() * 60000)
+                date = new Date(utc + (3600000*window.offset)).toTimeString()
+            } else {
+                date = new Date().toTimeString()
+            }
             const time = date.split(/ /g)[0]
             const sec = time.split(/:/g)[2]
             const min = time.split(/:/g)[1]

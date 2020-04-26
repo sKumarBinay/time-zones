@@ -2,6 +2,12 @@
 
 var _logic = require('./logic.js');
 
+var _data = require('../data.js');
+
+var data = _interopRequireWildcard(_data);
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
 (0, _logic.buildWatch)().then(function () {
   setTimeout(function () {
     document.querySelector('.watch').classList.remove('d-none');
@@ -16,34 +22,41 @@ if ('serviceWorker' in navigator) {
   });
 }
 
-// fetch('https://www.amdoren.com/api/timezone.php?api_key=5s7hVwd4xv2wVjKrEWQjcC79BM2nH2&loc=New+York')
-// .then(res => {
-//   debugger
-//   console.log(res)
-// })
-// .catch(err => {
-//   debugger
-//   console.log(err)
-// })
+var input = document.querySelector('input');
+input.addEventListener('change', function (e) {
+  var offset = void 0;
+  data.data.forEach(function (el) {
+    if (el.country.toLowerCase().includes(e.target.value.toLowerCase())) {
+      offset = el.UTCoffset;
+      calcTime(el.country, offset);
+      return;
+    }
+  });
+  console.log('offset:' + offset);
+});
 
-// function calcTime(city, offset) {
-//   // create Date object for current location
-//   var d = new Date();
+function calcTime(city, offset) {
+  // create Date object for current location
+  var d = new Date();
 
-//   // convert to msec
-//   // subtract local time zone offset
-//   // get UTC time in msec
-//   var utc = d.getTime() + (d.getTimezoneOffset() * 60000);
+  // convert to msec
+  // subtract local time zone offset
+  // get UTC time in msec
+  var utc = d.getTime() + d.getTimezoneOffset() * 60000;
 
-//   // create new Date object for different city
-//   // using supplied offset
-//   var nd = new Date(utc + (3600000*offset));
+  // create new Date object for different city
+  // using supplied offset
 
-//   // return time as a string
-//   return "The local time for city"+ city +" is "+ nd.toLocaleString();
-// }
+  var formatted = offset.includes(':30') ? offset.replace(':30', '.5') : offset.replace(':', '.');
 
-// alert(calcTime('Bombay', '+5.5'));
+  var nd = new Date(utc + 3600000 * formatted);
+
+  // return time as a string
+  console.log("The local time for city " + city + " is " + nd.toLocaleString());
+  return "The local time for city " + city + " is " + nd.toLocaleString();
+}
+
+// alert();
 
 // const dataDiv = document.querySelector('.data')
 // debugger
