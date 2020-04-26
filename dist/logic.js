@@ -4,13 +4,23 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 exports.buildWatch = buildWatch;
-function buildWatch() {
-    return new Promise(function (resolve, rej) {
+function buildWatch(notLocal, offset) {
+    return new Promise(function (resolve, reject) {
         var secHand = document.querySelector('.sec');
         var minHand = document.querySelector('.min');
         var hrHand = document.querySelector('.hr');
+        window.notLocal = notLocal;
+        window.offset = offset;
+        var date = void 0;
         setInterval(function () {
-            var date = new Date().toTimeString();
+            if (window.notLocal) {
+                var d = new Date();
+                // convert to msec, subtract local time zone offset, get UTC time in msec
+                var utc = d.getTime() + d.getTimezoneOffset() * 60000;
+                date = new Date(utc + 3600000 * window.offset).toTimeString();
+            } else {
+                date = new Date().toTimeString();
+            }
             var time = date.split(/ /g)[0];
             var sec = time.split(/:/g)[2];
             var min = time.split(/:/g)[1];
@@ -18,8 +28,8 @@ function buildWatch() {
             secHand.style.transform = 'rotate(' + sec * 6 + 'deg) translate(-50%, -50%)';
             minHand.style.transform = 'rotate(' + min * 6 + 'deg) translate(-50%, -50%)';
             hrHand.style.transform = 'rotate(' + (hr * 30 + min / 2) + 'deg) translate(-50%, -50%)';
+            if (date !== undefined) resolve(date);
         }, 1000);
-        resolve();
     });
 }
 

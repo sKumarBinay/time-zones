@@ -1,12 +1,12 @@
-import { buildWatch } from './logic.js'
-import * as data from '../data.js'
+import { buildWatch } from './logic.min.js'
+import * as data from '../data.min.js'
 
 buildWatch()
-.then(date => {
-  const amPmDiv = document.querySelector('.am-pm')
-  document.querySelector('.watch').classList.remove('d-none')
-  amPmDiv.classList.remove('d-none')
-  amPmDiv.textContent = date.split(':')[0] > 12 ? 'PM' : 'AM'
+  .then(date => {
+    const amPmDiv = document.querySelector('.am-pm')
+    document.querySelector('.watch').classList.remove('d-none')
+    amPmDiv.classList.remove('d-none')
+    amPmDiv.textContent = date.split(':')[0] > 12 ? 'PM' : 'AM'
   })
 
 // Make sure sw are supported
@@ -56,7 +56,7 @@ input.addEventListener('change', (e) => {
 
 })
 
-function calcTime (offset) {
+function calcTime(offset) {
   const amPmDiv = document.querySelector('.am-pm')
   let formatted
   if (offset.includes(':30')) {
@@ -69,7 +69,7 @@ function calcTime (offset) {
   })
 }
 
-function afterTimeZoneSelection (data) {
+function afterTimeZoneSelection(data) {
   const filterDiv = document.querySelector('.filter-div')
   const currentZone = document.querySelector('.current-zone')
   const dstInfo = document.querySelector('.dst-info')
@@ -84,27 +84,27 @@ function afterTimeZoneSelection (data) {
 
 }
 
-function formatDSTinfo (info) {
-if (info.DST !== '-') {
-  let startDate
-  let endDate
-  if (info.country !== 'Chatham Islands (New Zealand)' && info.country !== 'Iran') {
-    startDate = info.DSTperiodStartEnd.split(':00 ')[0] + ':00'
-    endDate = info.DSTperiodStartEnd.split(':00 ')[1]
-  } else if (info.country === 'Chatham Islands (New Zealand)') {
-    startDate = info.DSTperiodStartEnd.split(':45 ')[0] + ':45'
-    endDate = info.DSTperiodStartEnd.split(':45 ')[1]
-  } else if (info.country === 'Iran') {
-  
-  }
-  return `<div class="start"><span>Starts on:</span><span>${startDate}</span></div>
+function formatDSTinfo(info) {
+  if (info.DST !== '-') {
+    let startDate
+    let endDate
+    if (info.country !== 'Chatham Islands (New Zealand)' && info.country !== 'Iran') {
+      startDate = info.DSTperiodStartEnd.split(':00 ')[0] + ':00'
+      endDate = info.DSTperiodStartEnd.split(':00 ')[1]
+    } else if (info.country === 'Chatham Islands (New Zealand)') {
+      startDate = info.DSTperiodStartEnd.split(':45 ')[0] + ':45'
+      endDate = info.DSTperiodStartEnd.split(':45 ')[1]
+    } else if (info.country === 'Iran') {
+
+    }
+    return `<div class="start"><span>Starts on:</span><span>${startDate}</span></div>
           <div class="end"><span>Ends on:</span><span>${endDate}</span></div>`
-} else { return '' }
+  } else { return '' }
 
 }
 
-function emptyParent (parent) {
-while (parent.children.length !== 0) {
-  parent.childNodes[0].remove()
-}
+function emptyParent(parent) {
+  while (parent.children.length !== 0) {
+    parent.childNodes[0].remove()
+  }
 }
