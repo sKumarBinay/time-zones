@@ -51,10 +51,15 @@ body {
     margin: 0;
 }
 
-.likeBtn span {
-    color: white;
-    position: fixed;
-    font-size: 1.75rem;
+.likeBtn img {
+    background: white;
+    height: 18px;
+    border-radius: 50%;
+    padding: 7px;
+}
+
+input[type="checkbox"][name="checkLike"]:checked + img {
+    background: red; 
 }
 
 .filtered {
@@ -279,17 +284,22 @@ input:focus {
 .fav__title {
     position: fixed;
     bottom: 176px;
-    left: 65px;
+    left: 68px;
     color: #c5c0c0;
     font-size: 1rem;
 }
 
 button.fav__trigger {
-    border-radius: 10px;
+    border-radius: 60px;
     border: black;
-    font-size: 1.5rem;
     color: #ff0000bd;
     background-color: #999a9757;
+    padding: 10px;
+    padding-bottom: 6px;
+}
+
+button.fav__trigger img {
+    height: 18px;
 }
 
 .fav__option-wrapper {
@@ -308,7 +318,7 @@ button.fav__option {
     border-radius: 60px;
     padding: 10px 14px;
     border: black;
-    margin-bottom: 15px;
+    margin-bottom: 10px;
     font-size: 1rem;
     background-color: #861990;
     color: white;
