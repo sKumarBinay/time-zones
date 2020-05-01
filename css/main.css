@@ -49,18 +49,18 @@ body {
 }
 
 
-input[type="checkbox"][name="checkLike"] {
-    width: fit-content;
+.likeBtn input[type="checkbox"][name="checkLike"] {
+    width: 30px;
     position: fixed;
-    height: 20px;
+    height: 30px;
     opacity: 0;
     z-index: 2;
+    margin: 0;
 }
 
-input:checked + span {
+.likeBtn input[name="checkLike"]:checked + span {
     color: red; 
 }
-
 
 .filtered {
     padding: 6px;
