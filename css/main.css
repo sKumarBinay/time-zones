@@ -42,8 +42,6 @@ body {
     right: 20%;
 }
 
-
-
 .likeBtn input[type="checkbox"][name="checkLike"] {
     width: 30px;
     position: fixed;
@@ -51,10 +49,6 @@ body {
     opacity: 0;
     z-index: 2;
     margin: 0;
-}
-
-.likeBtn input[name="checkLike"]:checked + span {
-    color: red !important; 
 }
 
 .likeBtn span {

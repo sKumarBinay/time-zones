@@ -119,3 +119,11 @@ const favOptWrapper = document.querySelector('.fav__option-wrapper')
 favTrigger.addEventListener('click', () => {
   favOptWrapper.classList.toggle('show')
 })
+
+const likeBtn = document.querySelector('input[type="checkbox"][name="checkLike"]')
+const span = document.querySelector('input[type="checkbox"][name="checkLike"] + span')
+likeBtn.addEventListener('change', (e) => {
+  if (e.target.checked === true) {
+    span.style.color = 'red'
+  } else span.style.color = 'white'
+})
