@@ -113,3 +113,9 @@ function emptyParent(parent) {
     parent.childNodes[0].remove()
   }
 }
+
+const favTrigger = document.querySelector('.fav__trigger')
+const favOptWrapper = document.querySelector('.fav__option-wrapper')
+favTrigger.addEventListener('click', () => {
+  favOptWrapper.classList.toggle('show')
+})

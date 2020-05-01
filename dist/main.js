@@ -10,9 +10,10 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 
 (0, _logicMin.buildWatch)().then(function (date) {
   var amPmDiv = document.querySelector('.am-pm');
-  var dateDiv = document.querySelector('.am-pm .date');
+  var dateDiv = document.querySelector('.date');
   document.querySelector('.watch').classList.remove('d-none');
   amPmDiv.classList.remove('d-none');
+  dateDiv.classList.remove('d-none');
   amPmDiv.textContent = date[0].split(':')[0] > 12 ? 'PM' : 'AM';
   dateDiv.textContent = date[1];
 });
@@ -67,7 +68,7 @@ input.addEventListener('change', function (e) {
 
 function calcTime(offset) {
   var amPmDiv = document.querySelector('.am-pm');
-  var dateDiv = document.querySelector('.am-pm .date');
+  var dateDiv = document.querySelector('.date');
   var formatted = void 0;
   if (offset.includes(':30')) {
     formatted = offset.replace(':30', '.5');
