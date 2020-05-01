@@ -1,4 +1,4 @@
-import { buildWatch } from './logic.min.js'
+import { buildWatch } from './logic.js'
 import * as data from '../data.min.js'
 
 buildWatch()
