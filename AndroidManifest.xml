@@ -2,7 +2,7 @@
 <manifest ...>
     <application ...>
         <activity
-            android:windowSoftInputMode="adjustNothing"> 
+            android:windowSoftInputMode="adjustResize"> 
         </activity>
     </application>
 </manifest>
