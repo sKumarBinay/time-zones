@@ -2,6 +2,7 @@
 <manifest ...>
     <application ...>
         <activity
+            android:isScrollContainer="false" 
             android:windowSoftInputMode="adjustResize"> 
         </activity>
     </application>
