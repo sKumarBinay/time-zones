@@ -42,11 +42,6 @@ body {
     right: 20%;
 }
 
-.likeBtn span {
-    color: white;
-    position: fixed;
-    font-size: 1.75rem;
-}
 
 
 .likeBtn input[type="checkbox"][name="checkLike"] {
@@ -59,7 +54,13 @@ body {
 }
 
 .likeBtn input[name="checkLike"]:checked + span {
-    color: red; 
+    color: red !important; 
+}
+
+.likeBtn span {
+    color: white;
+    position: fixed;
+    font-size: 1.75rem;
 }
 
 .filtered {
