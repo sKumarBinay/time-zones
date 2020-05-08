@@ -15,7 +15,11 @@ body {
     margin: 0;
 }
 
-body.keyboard-open > *:not(.watch):not(.current-zone){
+.keyboard-open .day-time-saving,
+.keyboard-open .date,
+.keyboard-open .am-pm,
+.keyboard-open .fav,
+.keyboard-open .dst-info {
     display: none;
 }
 
