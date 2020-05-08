@@ -1,5 +1,6 @@
 import { buildWatch } from '../minified/logic.min.js'
 import * as data from '../minified/data.min.js'
+import { swipedetect } from '../js/swipe-detect.js'
 
 buildWatch()
   .then(date => {
@@ -25,42 +26,42 @@ const input = document.querySelector('input[name="country"]')
 input.addEventListener('input', (e) => {
   const filterDiv = document.querySelector('.filter-div')
   if (e.target.value.length >= 2) {
-  let split = ''
-  if (e.target.value.length > 2) {
-    split = e.target.value.split(e.target.value.charAt(2))[0]
-  } else if (e.target.value.length === 2) {
-    split = e.target.value
-  } else {
-    split = e.target.value + ' '
-  }
-  window.persistSearch = split.toUpperCase()
-
-  let filtered = []
-  data.data.forEach(el => {
-    if (el.country.toLowerCase().includes(e.target.value.toLowerCase())) {
-      filtered.push(el)
+    let split = ''
+    if (e.target.value.length > 2) {
+      split = e.target.value.split(e.target.value.charAt(2))[0]
+    } else if (e.target.value.length === 2) {
+      split = e.target.value
+    } else {
+      split = e.target.value + ' '
     }
-  })
+    window.persistSearch = split.toUpperCase()
 
-  if (filtered.length > 0) {
-    filterDiv.innerHTML = ''
-    filtered.forEach(f => {
-      filterDiv.innerHTML += `<span class="filtered"><a>${f.country}</a></span>`
+    let filtered = []
+    data.data.forEach(el => {
+      if (el.country.toLowerCase().includes(e.target.value.toLowerCase())) {
+        filtered.push(el)
+      }
     })
-    filterDiv.querySelectorAll('a').forEach((a, index) => {
-      a.addEventListener('click', () => {
-        calcTime(filtered[index].UTCoffset)
-        afterTimeZoneSelection(filtered[index])
+
+    if (filtered.length > 0) {
+      filterDiv.innerHTML = ''
+      filtered.forEach(f => {
+        filterDiv.innerHTML += `<span class="filtered"><a>${f.country}</a></span>`
       })
-    })
-  } 
-  // else if (filtered.length === 1) {
-  //   calcTime(filtered[0].UTCoffset)
-  //   afterTimeZoneSelection(filtered[0])
-  // } 
-  else {
-    filterDiv.textContent = 'Sorry, No match found.'
-  }
+      filterDiv.querySelectorAll('a').forEach((a, index) => {
+        a.addEventListener('click', () => {
+          calcTime(filtered[index].UTCoffset)
+          afterTimeZoneSelection(filtered[index])
+        })
+      })
+    }
+    // else if (filtered.length === 1) {
+    //   calcTime(filtered[0].UTCoffset)
+    //   afterTimeZoneSelection(filtered[0])
+    // } 
+    else {
+      filterDiv.textContent = 'Sorry, No match found.'
+    }
   } else {
     emptyParent(filterDiv)
   }
@@ -162,7 +163,7 @@ likeBtn.addEventListener('change', (e) => {
   if (currentZone === 'Local') return
   currentZone = currentZone.split('zone: ')[1]
   const findZone = data.data.filter(z => z.country === currentZone)[0]
-  if (e.target.checked === true) { 
+  if (e.target.checked === true) {
     favArray = JSON.parse(localStorage.getItem('fav-array')) || []
     if (favArray.length > 4) favArray.length = 4
     favArray.unshift(findZone)
@@ -173,7 +174,7 @@ likeBtn.addEventListener('change', (e) => {
     if (window.persistSearch) {
       persistPref.unshift(window.persistSearch)
     } else {
-      persistPref.unshift(currentZone.split(currentZone.charAt(2))[0].toUpperCase()) 
+      persistPref.unshift(currentZone.split(currentZone.charAt(2))[0].toUpperCase())
     }
     localStorage.setItem('persist-pref', JSON.stringify(persistPref))
   } else {
@@ -209,3 +210,23 @@ window.onresize = () => {
     document.body.classList.remove('keyboard-open')
   }
 }
+
+// change watch faces on swipe
+const watch = document.querySelector('.watch')
+watch.style.backgroundImage = localStorage.getItem('watchFace') || "url('../icon/watch-4.png')"
+const imgList = ['url("../icon/watch-2.png")', 'url("../icon/watch-3.png")', 'url("../icon/watch-4.png")', 'url("../icon/watch-5.png")']
+swipedetect(watch, function (swipedir) {
+  let img = watch.style.backgroundImage
+  const index = imgList.indexOf(img);
+  if (swipedir == 'right') {
+    if (index === imgList.length - 1) {
+      img = imgList[0]
+    } else img = imgList[index + 1]
+  } else if (swipedir == 'left') {
+    if (index === 0) {
+      img = imgList[imgList.length - 1]
+    } else img = imgList[index - 1]
+  }
+  watch.style.backgroundImage = img
+  localStorage.setItem('watchFace', img)
+})
