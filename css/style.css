@@ -96,7 +96,7 @@ input[type="checkbox"][name="checkLike"]:checked + img {
 
 .day-time-saving {
     position: fixed;
-    bottom: 30px;
+    bottom: 4%;
     left: 20px;
     color: #c5c0c0;
 }
@@ -125,7 +125,7 @@ input[type="checkbox"][name="checkLike"]:checked + img {
     color: #84b720;
     font-size: 2rem;
     position: fixed;
-    bottom: 194px;
+    bottom: 29%;
 }
 
 .start {
