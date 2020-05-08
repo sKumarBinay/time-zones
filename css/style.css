@@ -15,6 +15,10 @@ body {
     margin: 0;
 }
 
+body.keyboard-open > *:not(.watch):not(.current-zone){
+    display: none;
+}
+
 .header {
     height: 60px;
     color: white;

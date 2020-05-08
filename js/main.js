@@ -188,3 +188,15 @@ likeBtn.addEventListener('change', (e) => {
     localStorage.setItem('persist-pref', JSON.stringify(persistPref))
   }
 })
+
+window.fixedViewportHeight = window.innerHeight
+
+window.onresize = () => {
+  if (window.innerHeight < window.fixedViewportHeight) {
+    document.body.classList.add('keyboard-open')
+  } else if (window.innerHeight === window.fixedViewportHeight) {
+    document.body.classList.remove('keyboard-open')
+  } else {
+    document.body.classList.remove('keyboard-open')
+  }
+}
