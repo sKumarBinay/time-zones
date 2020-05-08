@@ -22,7 +22,9 @@ if ('serviceWorker' in navigator) {
 }
 
 const input = document.querySelector('input[name="country"]')
-input.addEventListener('change', (e) => {
+input.addEventListener('input', (e) => {
+  const filterDiv = document.querySelector('.filter-div')
+  if (e.target.value.length >= 2) {
   let split = ''
   if (e.target.value.length > 2) {
     split = e.target.value.split(e.target.value.charAt(2))[0]
@@ -32,13 +34,6 @@ input.addEventListener('change', (e) => {
     split = e.target.value + ' '
   }
   window.persistSearch = split.toUpperCase()
-  const dayLightSaving = document.querySelector('#day-saving-checkbox')
-
-  dayLightSaving.addEventListener('change', (e) => {
-    const currentZone = document.querySelector('.current-zone').textContent.split('zone: ')[1]
-    const findZone = data.data.filter(z => z.country === currentZone)[0]
-    e.target.checked ? calcTime(findZone.DST) : calcTime(findZone.UTCoffset)
-  })
 
   let filtered = []
   data.data.forEach(el => {
@@ -47,8 +42,7 @@ input.addEventListener('change', (e) => {
     }
   })
 
-  const filterDiv = document.querySelector('.filter-div')
-  if (filtered.length > 1) {
+  if (filtered.length > 0) {
     filterDiv.innerHTML = ''
     filtered.forEach(f => {
       filterDiv.innerHTML += `<span class="filtered"><a>${f.country}</a></span>`
@@ -59,13 +53,17 @@ input.addEventListener('change', (e) => {
         afterTimeZoneSelection(filtered[index])
       })
     })
-  } else if (filtered.length === 1) {
-    calcTime(filtered[0].UTCoffset)
-    afterTimeZoneSelection(filtered[0])
-  } else {
+  } 
+  // else if (filtered.length === 1) {
+  //   calcTime(filtered[0].UTCoffset)
+  //   afterTimeZoneSelection(filtered[0])
+  // } 
+  else {
     filterDiv.textContent = 'Sorry, No match found.'
   }
-
+  } else {
+    emptyParent(filterDiv)
+  }
 })
 
 function calcTime(offset) {
@@ -172,7 +170,11 @@ likeBtn.addEventListener('change', (e) => {
 
     persistPref = JSON.parse(localStorage.getItem('persist-pref')) || []
     if (persistPref.length > 4) persistPref.length = 4
-    persistPref.unshift(window.persistSearch)
+    if (window.persistSearch) {
+      persistPref.unshift(window.persistSearch)
+    } else {
+      persistPref.unshift(currentZone.split(currentZone.charAt(2))[0].toUpperCase()) 
+    }
     localStorage.setItem('persist-pref', JSON.stringify(persistPref))
   } else {
     favArray = JSON.parse(localStorage.getItem('fav-array'))
@@ -187,6 +189,13 @@ likeBtn.addEventListener('change', (e) => {
     localStorage.setItem('fav-array', JSON.stringify(favArray))
     localStorage.setItem('persist-pref', JSON.stringify(persistPref))
   }
+})
+
+const dayLightSaving = document.querySelector('#day-saving-checkbox')
+dayLightSaving.addEventListener('change', (e) => {
+  const currentZone = document.querySelector('.current-zone').textContent.split('zone: ')[1]
+  const findZone = data.data.filter(z => z.country === currentZone)[0]
+  e.target.checked ? calcTime(findZone.DST) : calcTime(findZone.UTCoffset)
 })
 
 window.fixedViewportHeight = window.innerHeight
