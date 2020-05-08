@@ -98,7 +98,7 @@ function afterTimeZoneSelection(data) {
   const favArray = JSON.parse(localStorage.getItem('fav-array')) || []
   const selected = favArray.filter(f => f.country === currentZone.textContent.split('zone: ')[1])[0]
   if (selected) likeBtn.checked = true
-
+  if (favOptWrapper.classList.contains('show')) favOptWrapper.classList.remove('show')
 }
 
 function formatDSTinfo(info) {
