@@ -213,7 +213,7 @@ window.onresize = () => {
 
 // change watch faces on swipe
 const watch = document.querySelector('.watch')
-watch.style.backgroundImage = localStorage.getItem('watchFace') || "url('../icon/watch-4.png')"
+watch.style.backgroundImage = localStorage.getItem('watchFace') || "url('../icon/watch-5.png')"
 const imgList = ['url("../icon/watch-2.png")', 'url("../icon/watch-3.png")', 'url("../icon/watch-4.png")', 'url("../icon/watch-5.png")']
 swipedetect(watch, function (swipedir) {
   let img = watch.style.backgroundImage
