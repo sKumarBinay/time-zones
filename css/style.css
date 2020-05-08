@@ -16,7 +16,6 @@ body {
 }
 
 .keyboard-open .date,
-.keyboard-open .am-pm,
 .keyboard-open .fav,
 .keyboard-open .dst-info {
     display: none;
