@@ -21,6 +21,11 @@ body {
     display: none;
 }
 
+.keyboard-open .likeBtn {
+    top: 33%;
+    right: 10%;
+}
+
 .header {
     height: 60px;
     color: white;
