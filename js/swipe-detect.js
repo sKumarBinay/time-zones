@@ -14,6 +14,7 @@ export function swipedetect(el, callback){
         handleswipe = callback || function(swipedir){}
       
         touchsurface.addEventListener('touchstart', function(e){
+            document.activeElement.blur()
             var touchobj = e.changedTouches[0]
             swipedir = 'none'
     //         dist = 0
