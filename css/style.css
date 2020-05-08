@@ -1,11 +1,15 @@
 .d-none {
     display: none;
 }
+html, body {
+    height: 100%;
+}
+
 body {
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 100vh;
+    /* min-height: 100vh; */
     background-color: #000000;
     overflow: auto;
     margin: 0;
